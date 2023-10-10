@@ -9,9 +9,9 @@ import lombok.*;
 @Builder
 public class BodyPartnerCreation {
 
-    private Long id;
-
     private String tradingName;
+
+    private String ownerName;
 
     private String document;
 

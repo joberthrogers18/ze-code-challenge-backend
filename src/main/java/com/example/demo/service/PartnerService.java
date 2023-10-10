@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.BodyPartnerCreation;
 import com.example.demo.models.Partner;
 import com.example.demo.repository.PartnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,15 @@ public class PartnerService {
     @Autowired
     PartnerRepository partnerRepository;
 
-    public Partner createPartner() {
-        return this.partnerRepository.save(null);
+    public void createPartner(BodyPartnerCreation partnerBody) {
+
+        Partner partner = Partner.builder()
+                .tradingName(partnerBody.getTradingName())
+                .document(partnerBody.getDocument())
+                .ownerName(partnerBody.getOwnerName())
+                .coverageArea(partnerBody.getCoverageArea().toString())
+                .address(partnerBody.getAddress().toString()).build();
+
+        this.partnerRepository.save(partner);
     }
 }
