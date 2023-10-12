@@ -75,6 +75,49 @@ public class PartnerController {
         }
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseRequest> getPartnerById (
+            @PathVariable("id") Long id
+    ) {
+        try {
+
+            Optional<Partner> partner = this.partnerService.findById(id);
+
+            if (partner.isEmpty()) {
+                return ResponseEntity
+                        .status(HttpStatus.NOT_FOUND)
+                        .body(
+                                ResponseRequest
+                                        .builder()
+                                        .message("Partner not exists")
+                                        .data(null)
+                                        .build()
+                        );
+            }
+
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(
+                            ResponseRequest
+                                    .builder()
+                                    .message("Partner deleted successfully")
+                                    .data(partner)
+                                    .build()
+                    );
+
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(
+                            ResponseRequest
+                                    .builder()
+                                    .message(e.getMessage())
+                                    .data(null)
+                                    .build()
+                    );
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<ResponseRequest> deletePartner(
         @PathVariable("id") Long id
