@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PartnerService {
@@ -41,5 +42,13 @@ public class PartnerService {
 
     public List<Partner> getAllPartnerAvailable() {
         return this.partnerRepository.findAll();
+    }
+
+    public void deleteById(Long id) {
+        this.partnerRepository.deleteById(id);
+    }
+
+    public Optional<Partner> findById(Long id) {
+        return this.partnerRepository.findById(id);
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @ResponseBody
@@ -71,6 +72,51 @@ public class PartnerController {
                         .data(e.getMessage())
                         .build()
                 );
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ResponseRequest> deletePartner(
+        @PathVariable("id") Long id
+    ) {
+        try {
+
+            Optional<Partner> partner = this.partnerService.findById(id);
+
+            if (partner.isEmpty()) {
+                return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(
+                        ResponseRequest
+                            .builder()
+                                .message("Partner not exists")
+                                .data(null)
+                                .build()
+                    );
+            }
+
+            this.partnerService.deleteById(id);
+
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(
+                            ResponseRequest
+                                    .builder()
+                                    .message("Partner deleted successfully")
+                                    .data(null)
+                                    .build()
+                    );
+
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(
+                            ResponseRequest
+                                    .builder()
+                                    .message(e.getMessage())
+                                    .data(null)
+                                    .build()
+                    );
         }
     }
 
