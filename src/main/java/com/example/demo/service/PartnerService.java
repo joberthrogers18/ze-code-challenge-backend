@@ -51,4 +51,8 @@ public class PartnerService {
     public Optional<Partner> findById(Long id) {
         return this.partnerRepository.findById(id);
     }
+
+    public Partner updatePartner(Partner partner) {
+        return this.partnerRepository.save(partner);
+    }
 }

@@ -4,6 +4,7 @@ import com.example.demo.dto.BodyPartnerCreation;
 import com.example.demo.dto.ResponseRequest;
 import com.example.demo.models.Partner;
 import com.example.demo.service.PartnerService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -163,4 +164,65 @@ public class PartnerController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<ResponseRequest> updatePartner(
+            @PathVariable("id") Long id,
+            @RequestBody BodyPartnerCreation partnerBody
+    ) {
+        try {
+
+            Optional<Partner> partner = this.partnerService.findById(id);
+
+            if (partner.isEmpty()) {
+                return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(
+                      ResponseRequest
+                          .builder()
+                          .data(null)
+                          .message("Id partner not exist in database")
+                          .build()
+                    );
+            }
+
+            ObjectMapper mapperObject = new ObjectMapper();
+
+            partner.get().setTradingName(partnerBody.getTradingName());
+            partner.get().setOwnerName(partnerBody.getOwnerName());
+            partner.get().setDocument(partnerBody.getDocument());
+            partner.get().setCoverageArea(
+                mapperObject.writeValueAsString(
+                    partnerBody.getCoverageArea()
+                )
+            );
+            partner.get().setAddress(
+                mapperObject.writeValueAsString(
+                        partnerBody.getAddress()
+                )
+            );
+
+            Partner newPartner = this.partnerService.updatePartner(partner.get());
+
+            return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(
+                    ResponseRequest
+                        .builder()
+                        .message("Partner updated successfully")
+                            .data(newPartner)
+                            .build()
+                );
+
+        } catch (Exception e) {
+            return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(
+                    ResponseRequest
+                        .builder()
+                        .message("Error when update partner")
+                        .data(e.getMessage())
+                        .build()
+                );
+        }
+    }
 }
