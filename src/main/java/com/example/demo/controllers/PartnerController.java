@@ -27,24 +27,24 @@ public class PartnerController {
             this.partnerService.createPartner(partnerBody);
 
             ResponseRequest response = ResponseRequest
-                    .builder()
-                    .message("Partner created successfully")
-                    .data(null)
-                    .build();
+                .builder()
+                .message("Partner created successfully")
+                .data(null)
+                .build();
 
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body(response);
         }catch (Exception e) {
             ResponseRequest response = ResponseRequest
-                    .builder()
-                    .message("Error while created partner")
-                    .data(e.getMessage())
-                    .build();
+                .builder()
+                .message("Error while created partner")
+                .data(e.getMessage())
+                .build();
 
             return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(response);
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(response);
         }
     }
 
@@ -57,20 +57,20 @@ public class PartnerController {
                 .status(HttpStatus.OK)
                 .body(
                     ResponseRequest
-                        .builder()
-                        .message(null)
-                        .data(partners)
-                        .build()
+                    .builder()
+                    .message(null)
+                    .data(partners)
+                    .build()
                 );
         } catch (Exception e) {
             return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(
                     ResponseRequest
-                        .builder()
-                        .message("Error while recover partners")
-                        .data(e.getMessage())
-                        .build()
+                    .builder()
+                    .message("Error while recover partners")
+                    .data(e.getMessage())
+                    .build()
                 );
         }
     }
@@ -85,36 +85,36 @@ public class PartnerController {
 
             if (partner.isEmpty()) {
                 return ResponseEntity
-                        .status(HttpStatus.NOT_FOUND)
-                        .body(
-                                ResponseRequest
-                                        .builder()
-                                        .message("Partner not exists")
-                                        .data(null)
-                                        .build()
-                        );
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(
+                        ResponseRequest
+                        .builder()
+                        .message("Partner not exists")
+                        .data(null)
+                        .build()
+                    );
             }
 
             return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(
-                            ResponseRequest
-                                    .builder()
-                                    .message("Partner deleted successfully")
-                                    .data(partner)
-                                    .build()
-                    );
+                .status(HttpStatus.OK)
+                .body(
+                    ResponseRequest
+                        .builder()
+                        .message("Partner deleted successfully")
+                        .data(partner)
+                        .build()
+                );
 
         } catch (Exception e) {
             return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(
-                            ResponseRequest
-                                    .builder()
-                                    .message(e.getMessage())
-                                    .data(null)
-                                    .build()
-                    );
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(
+                    ResponseRequest
+                        .builder()
+                        .message(e.getMessage())
+                        .data(null)
+                        .build()
+                );
         }
     }
 
@@ -131,35 +131,35 @@ public class PartnerController {
                     .status(HttpStatus.NOT_FOUND)
                     .body(
                         ResponseRequest
-                            .builder()
-                                .message("Partner not exists")
-                                .data(null)
-                                .build()
+                        .builder()
+                        .message("Partner not exists")
+                        .data(null)
+                        .build()
                     );
             }
 
             this.partnerService.deleteById(id);
 
             return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(
-                            ResponseRequest
-                                    .builder()
-                                    .message("Partner deleted successfully")
-                                    .data(null)
-                                    .build()
-                    );
+                .status(HttpStatus.OK)
+                .body(
+                    ResponseRequest
+                        .builder()
+                        .message("Partner deleted successfully")
+                        .data(null)
+                        .build()
+                );
 
         } catch (Exception e) {
             return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(
-                            ResponseRequest
-                                    .builder()
-                                    .message(e.getMessage())
-                                    .data(null)
-                                    .build()
-                    );
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(
+                    ResponseRequest
+                        .builder()
+                        .message(e.getMessage())
+                        .data(null)
+                        .build()
+                );
         }
     }
 
